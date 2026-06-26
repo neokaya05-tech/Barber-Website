@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kasicuts.co.za/sitemap.xml
