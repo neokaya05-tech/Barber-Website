@@ -16,9 +16,9 @@ app.use(express.static(__dirname));
 // 2. CORS — must come before any route or body parsing so preflight OPTIONS
 //    requests are handled immediately
 app.use(cors({
-    origin: '*',
+    origin: 'https://kasi-cuts-backend.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type']
+    credentials: true
 }));
 
 // 3. Security headers
@@ -96,6 +96,9 @@ app.post('/api/appointments', async (req, res) => {
             message: "Our appointment book is taking a breather. Try again shortly!"
         });
     }
+
+    console.log("Received booking data:", req.body);
+
 });
 
 // 📋 Get All Bookings
