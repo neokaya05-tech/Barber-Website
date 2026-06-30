@@ -81,95 +81,41 @@ if (filterBtns.length > 0) {
 // ==========================================
 // 📅 APPOINTMENT FORM SUBMISSION
 // ==========================================
-const bookingForm = document.getElementById('appointment-form');
+const appointmentForm = document.getElementById('appointment-form');
 
-if (bookingForm) {
-    bookingForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+if (appointmentForm) {
+    appointmentForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Stop the page from refreshing
 
-        if (!navigator.onLine) {
-            showToast("You seem to be offline! Please check your network connection.", "error");
-            return;
-        }
-
-        const nameInput    = document.getElementById('name');
-        const phoneInput   = document.getElementById('phone');
-        const serviceInput = document.getElementById('service');
-        const dateInput    = document.getElementById('date');
-        const timeInput    = document.getElementById('time');
-
-        const appointmentData = {
-            customerName: nameInput    ? nameInput.value    : '',
-            phoneNumber:  phoneInput   ? phoneInput.value   : '',
-            service:      serviceInput ? serviceInput.value : '',
-            date:         dateInput    ? dateInput.value    : '',
-            timeSlot:     timeInput    ? timeInput.value    : ''
+        // Collect values from the form — matches appointmentSchema in server.js
+        const data = {
+            customerName: document.getElementById('customerName').value,
+            phoneNumber: document.getElementById('phoneNumber').value,
+            service: document.getElementById('service').value,
+            date: document.getElementById('date').value,
+            timeSlot: document.getElementById('timeSlot').value,
+            message: document.getElementById('message').value
         };
 
         try {
-            const response = await fetch('http://localhost:5000/api/appointments', {
+            const response = await fetch('https://kasi-cuts-backend.onrender.com/api/appointments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(appointmentData)
+                body: JSON.stringify(data)
             });
 
-            const data = await response.json();
+            const result = await response.json();
 
             if (!response.ok) {
-                showToast(data.message || "Something went wrong on our side.", "error");
+                showToast(result.message || "Failed to book appointment.", "error");
                 return;
             }
 
-            showToast("Awesome! Your appointment is booked. See you soon!", "success");
-            bookingForm.reset();
-
+            showToast("Awesome! Your appointment is booked.", "success");
+            appointmentForm.reset();
         } catch (networkError) {
             console.error("Network error:", networkError);
-            showToast("Connection timeout. The server couldn't be reached. Please try again!", "error");
-        }
-    });
-}
-
-// ==========================================
-// ⭐ REVIEW FORM SUBMISSION
-// ==========================================
-const reviewForm = document.getElementById('review-form');
-
-if (reviewForm) {
-    reviewForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const nameInput   = document.getElementById('reviewName');
-        const ratingInput = document.getElementById('reviewRating');
-        const textInput   = document.getElementById('reviewText');
-
-        const reviewData = {
-            customerName: nameInput.value,
-            rating:       parseInt(ratingInput.value),
-            reviewText:   textInput.value
-        };
-
-        try {
-            const response = await fetch('http://localhost:5000/api/reviews', {  // ✅ Consistent localhost
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(reviewData)
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                showToast(data.error || "Could not submit review.", "error");
-                return;
-            }
-
-            showToast("Thank you for your review! It is now live. 🏆", "success");
-            reviewForm.reset();
-            loadHomepageReviews();
-
-        } catch (error) {
-            console.error('Review submission error:', error);
-            showToast("Could not submit review. Is your backend server running?", "error");
+            showToast("Server unreachable. Please try again!", "error");
         }
     });
 }

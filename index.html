@@ -800,25 +800,23 @@
 
               <form id="appointment-form" class="appoin-form">
 
-  <div id="form-fields-wrapper">
-    <div class="input-wrapper">
-      <input type="text" id="customerName" name="name" placeholder="Your Full Name" required class="input-field">
-      <input type="email" id="email" name="email_address" placeholder="Email Address" required class="input-field">
-    </div>
+  <!-- Inside the <form id="appointment-form"> -->
+<div class="input-wrapper">
+    <input type="text" id="customerName" name="name" placeholder="Your Name" required class="input-field">
+    
+    <input type="tel" id="phoneNumber" name="phone" placeholder="Phone Number" required class="input-field">
 
-    <div class="input-wrapper">
-      <input type="text" id="phoneNumber" name="phone" placeholder="Phone Number" required class="input-field">
-
-      <select id="service" name="category" class="input-field">
+    <select id="service" name="category" class="input-field">
         <option value="">Select category</option>
         <option value="Beauty & spa">Beauty & spa</option>
         <option value="Body massage">Body massage</option>
         <option value="Shaving & Facial">Shaving & Facial</option>
         <option value="Hair Color">Hair Color</option>
-      </select>
-    </div>
+    </select>
+</div>
 
-    <input type="date" id="date" name="date" required class="input-field date">
+<input type="date" id="date" name="date" required class="input-field date">
+<!-- ... rest of your form -->
 
     <select id="timeSlot" name="timeSlot" required class="input-field" style="background-color: #1a1a1e; color: white; margin-top: 10px; margin-bottom: 10px;">
       <option value="">Select a Time Slot</option>
@@ -839,6 +837,7 @@
       <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
     </button>
   </div>
+  </form>
 
   <div id="success-banner" style="display: none; background: #1a1a1e; border: 2px solid #c5a880; padding: 30px; border-radius: 8px; text-align: center; margin-top: 10px;">
     <h3 style="color: #c5a880; font-size: 24px; margin-bottom: 10px;">🎉 Booking Submitted!</h3>
@@ -850,7 +849,6 @@
     </a>
   </div>
 
-</form>
             </div>
 
             <figure class="card-banner img-holder" style="--width: 250; --height: 774;">

@@ -16,11 +16,10 @@ app.use(express.static(__dirname));
 // 2. CORS — must come before any route or body parsing so preflight OPTIONS
 //    requests are handled immediately
 app.use(cors({
-    origin: 'https://kasi-cuts-backend.onrender.com',
+    origin: '*', // Put your FRONTEND URL here
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
-
 // 3. Security headers
 app.use(helmet({
     contentSecurityPolicy: false,
@@ -29,8 +28,8 @@ app.use(helmet({
 
 // 4. Body parsers — mongoSanitize needs these to run first so it has a
 //    parsed body to sanitize
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // 🟢 FIX: Clean, non-crashing MongoDB sanitization initialization
 app.use(mongoSanitize({
