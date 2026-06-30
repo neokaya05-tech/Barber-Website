@@ -16,7 +16,7 @@ app.use(express.static(__dirname));
 // 2. CORS — must come before any route or body parsing so preflight OPTIONS
 //    requests are handled immediately
 app.use(cors({
-    origin: '*', // Put your FRONTEND URL here
+    origin: 'https://kasi-cuts-backend.onrender.com/', // Put your FRONTEND URL here
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
